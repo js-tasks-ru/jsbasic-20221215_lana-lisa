@@ -1,3 +1,9 @@
 function sumSalary(salaries) {
-  // ваш код...
+  let res = 0;
+  for (let key of Object.values(salaries)) {
+    if (isFinite(key)) {
+      res += key
+    }
+  }
+  return res
 }
