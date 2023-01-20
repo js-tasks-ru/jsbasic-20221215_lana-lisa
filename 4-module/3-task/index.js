@@ -6,23 +6,14 @@ function highlight(table) {
     let gender = row.cells[2]
     let status = row.cells[3]
 
-    if (status.hasAttribute('data-available')) {
-      if (status.dataset.available ==='true') {
-        row.classList.add("available")
-      } else if (status.dataset.available ==='false') {
-        row.classList.add("unavailable")
-      }
-    }
+    let { available } = status.dataset
 
-    if (!status.dataset.available) {
-      row.hidden = true
-    }
+    available ==='true' ? row.classList.add("available") : 
+        (available ==='false') ? row.classList.add("unavailable") : 
+        row.hidden = true
 
-    if (gender.textContent === 'm') {
-      row.classList.add('male')
-    } else if (gender.textContent === 'f') {
+    gender.textContent === 'm' ? row.classList.add('male') : 
       row.classList.add('female')
-    }
 
     if (age.textContent < 18) {
       row.style="text-decoration: line-through"
