@@ -18,8 +18,8 @@ import createElement from '../../assets/lib/create-element.js'
 
 export default class UserTable {
   constructor(rows) {
-    this.rows = rows
-    this.elem = createElement (`
+    this.rows = rows;
+    this.table = createElement (`
     <table>
         <thead>
             <tr>
@@ -45,17 +45,18 @@ export default class UserTable {
         </tbody>
     </table>
     `)
-  }
-
-
-  render() {
-    this.addEventListeners()
-    return this.elem
+    this.elem = this.render();
   }
   
 
-  addEventListeners() {
-    for (let btn of this.elem.querySelectorAll('button')) {
+  render() {
+    this.addEventListeners()
+    return this.table
+  }
+  
+
+  addEventListeners() { 
+    for (let btn of this.table.querySelectorAll('button')) {
       btn.addEventListener('click',  (event)=>  {
         event.target.closest('tr').remove()
       })
