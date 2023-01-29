@@ -7,7 +7,7 @@ function initCarousel() {
   
   let counter = 0
   let slideWidth = caruselSlide[0].offsetWidth 
-
+ 
   arrowRight.addEventListener('click', function () {
     counter ++
     arrowLeft.style.display = ''
