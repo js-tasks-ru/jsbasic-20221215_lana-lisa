@@ -35,26 +35,33 @@ export default class Carousel {
       `
     )
 
-    let addProduct;
-    for (let slide of this.elem.querySelectorAll('.carousel__slide')) {
-    addProduct = new CustomEvent('product-add', {
-      detail: console.log(slide.dataset.id) || slide.dataset.id,
-      bubbles: true
-    })
-    }
-  
+
+    // this.elem.onclick = ({target}) => {
+    //   let btn = target.closest('.carousel__button')
+      
+    //   if (btn) {
+    //     let id = target.closest('[data-id]').dataset.id
+    //     this.elem.dispatchEvent(new CustomEvent('product-add', {
+    //       detail: id,
+    //       bubbles: true
+    //     }) )
+    //     console.log(id)
+    //   }
+    // }
+
+
     for (let btn of this.elem.querySelectorAll('.carousel__button')) {
-      btn.addEventListener('click', () => {
-        btn.dispatchEvent(addProduct)
-      })
+      btn.addEventListener('click', (event) => {
+      let id = event.target.closest(".carousel__slide").dataset.id
+      this.elem.dispatchEvent(new CustomEvent('product-add', {
+        detail: id,
+        bubbles: true
+      }))
+      console.log(id)
+    })
+  }
 
-      btn.addEventListener('product-add', (event) => {
-        console.log(event.detail)
-      })
-    }
   
-  
-
     let caruselInner = this.elem.querySelector('.carousel__inner')
     let caruselSlide = this.elem.querySelectorAll('.carousel__slide')
     let arrowRight = this.elem.querySelector('.carousel__arrow_right')
