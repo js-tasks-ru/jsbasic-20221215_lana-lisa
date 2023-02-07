@@ -14,7 +14,6 @@ export default class StepSlider {
         <div class="slider__progress" style="width: 0%;"></div>
 
         <div class="slider__steps">
-          <span class="slider__step-active"></span>
         </div>
       </div>
       `
@@ -24,36 +23,42 @@ export default class StepSlider {
 
 
   addEventListeners() {
-    
-    for (let i = 0; i < this.config.steps - 1; i++) {
+
+    let sliderSteps = this.elem.querySelector('.slider__steps')
+
+    for (let i = 0; i < this.config.steps; i++) {
       let span = document.createElement('span')
       span.id = i
-      this.elem.querySelector('.slider__steps').appendChild(span)
+      sliderSteps.appendChild(span)
     }
 
+    sliderSteps.firstElementChild.classList.add("slider__step-active")
 
     this.elem.addEventListener('click', event => {
       let thumb = this.elem.querySelector('.slider__thumb')
       let progress = this.elem.querySelector('.slider__progress')
-      let sliderSteps = this.elem.querySelector('.slider__steps')
       
       let x = event.clientX
       let left = this.elem.getBoundingClientRect().left
       let shift = x - left
       let leftRelative = shift / this.elem.offsetWidth
-      let value = Math.round(leftRelative * 4)
+      let segments = this.config.steps - 1
+      let approximateValue = leftRelative * segments
+      let value = Math.round(approximateValue)
 
-      this.elem.querySelector('.slider__value').innerHTML = value 
-      document.getElementById(value-1).classList.add('slider__step-active')
-      let leftPercents = 25 * value
-      thumb.style.left = `${leftPercents}%`
-      progress.style.width = `${leftPercents}%`
-      
       let activeStep = sliderSteps.querySelector('.slider__step-active')
       if (activeStep) {
         activeStep.classList.remove('slider__step-active')
       }
 
+      this.elem.querySelector('.slider__value').innerHTML = value 
+      document.getElementById(value).classList.add('slider__step-active')
+      let leftPercents = value / segments * 100
+      console.log(leftPercents)
+      thumb.style.left = `${leftPercents}%`
+      progress.style.width = `${leftPercents}%`
+      
+      
       this.elem.dispatchEvent(new CustomEvent('slider-change', {
         detail: console.log(value) || value,
         bubbles: true 
