@@ -63,8 +63,12 @@ export default class RibbonMenu {
       let id = event.target.closest(".ribbon__item").dataset.id
       console.log(id)
       let ribbonItem = event.target.closest('.ribbon__item')
-      
-      // ribbonItem.classList.remove('ribbon__item_active')
+
+      let activeItem = ribbonInner.querySelector('.ribbon__item_active');
+      if (activeItem) {
+        activeItem.classList.remove('ribbon__item_active');
+      }
+     
       ribbonItem.classList.add('ribbon__item_active')
       event.preventDefault()
       
